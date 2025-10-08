@@ -1,54 +1,24 @@
 import 'package:flutter/material.dart';
 import '../models/recipe.dart';
-import '../data/sample_recipes.dart';
 
-class DetailsScreen extends StatefulWidget {
+class DetailsScreen extends StatelessWidget {
   final Recipe recipe;
 
   const DetailsScreen({super.key, required this.recipe});
 
   @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
-}
-
-class _DetailsScreenState extends State<DetailsScreen> {
-  late Recipe currentRecipe;
-
-  @override
-  void initState() {
-    super.initState();
-    currentRecipe = widget.recipe;
-  }
-
-  void _toggleFavorite() {
-    setState(() {
-      SampleRecipes.toggleFavorite(currentRecipe.id);
-      currentRecipe = SampleRecipes.getRecipeById(currentRecipe.id)!;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentRecipe.name),
+        title: Text(recipe.name),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        actions: [
-          IconButton(
-            icon: Icon(
-              currentRecipe.isFavorite ? Icons.favorite : Icons.favorite_border,
-              color: currentRecipe.isFavorite ? Colors.red : null,
-            ),
-            onPressed: _toggleFavorite,
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              currentRecipe.imageUrl,
+              recipe.imageUrl,
               height: 250,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -69,47 +39,27 @@ class _DetailsScreenState extends State<DetailsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          currentRecipe.name,
-                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      ElevatedButton.icon(
-                        onPressed: _toggleFavorite,
-                        icon: Icon(
-                          currentRecipe.isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: currentRecipe.isFavorite ? Colors.red : null,
-                        ),
-                        label: Text(currentRecipe.isFavorite ? 'Favorited' : 'Favorite'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: currentRecipe.isFavorite 
-                              ? Colors.red.shade50 
-                              : null,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    recipe.name,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    currentRecipe.description,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.grey[600],
-                    ),
+                    recipe.description,
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey[600]),
                   ),
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      _buildTimeInfo('Prep', currentRecipe.prepTimeMinutes),
+                      _buildTimeInfo(context, 'Prep', recipe.prepTimeMinutes),
                       const SizedBox(width: 24),
-                      _buildTimeInfo('Cook', currentRecipe.cookTimeMinutes),
+                      _buildTimeInfo(context, 'Cook', recipe.cookTimeMinutes),
                       const SizedBox(width: 24),
-                      _buildTimeInfo('Total', currentRecipe.totalTimeMinutes),
+                      _buildTimeInfo(context, 'Total', recipe.totalTimeMinutes),
                     ],
                   ),
                   const SizedBox(height: 24),
@@ -120,26 +70,28 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...currentRecipe.ingredients.map((ingredient) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(
-                          Icons.circle,
-                          size: 8,
-                          color: Colors.orange,
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            ingredient,
-                            style: Theme.of(context).textTheme.bodyMedium,
+                  ...recipe.ingredients.map(
+                    (ingredient) => Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(
+                            Icons.circle,
+                            size: 8,
+                            color: Colors.orange,
                           ),
-                        ),
-                      ],
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              ingredient,
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  )),
+                  ),
                   const SizedBox(height: 24),
                   Text(
                     'Instructions',
@@ -148,7 +100,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                     ),
                   ),
                   const SizedBox(height: 12),
-                  ...currentRecipe.instructions.asMap().entries.map((entry) {
+                  ...recipe.instructions.asMap().entries.map((entry) {
                     final index = entry.key;
                     final instruction = entry.value;
                     return Padding(
@@ -195,7 +147,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
     );
   }
 
-  Widget _buildTimeInfo(String label, int minutes) {
+  Widget _buildTimeInfo(BuildContext context, String label, int minutes) {
     return Column(
       children: [
         Text(
@@ -207,9 +159,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
         ),
         Text(
           '$label min',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: Colors.grey[600],
-          ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodySmall?.copyWith(color: Colors.grey[600]),
         ),
       ],
     );

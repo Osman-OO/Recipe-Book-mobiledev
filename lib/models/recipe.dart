@@ -7,7 +7,6 @@ class Recipe {
   final String imageUrl;
   final int prepTimeMinutes;
   final int cookTimeMinutes;
-  bool isFavorite;
 
   Recipe({
     required this.id,
@@ -18,7 +17,6 @@ class Recipe {
     required this.imageUrl,
     required this.prepTimeMinutes,
     required this.cookTimeMinutes,
-    this.isFavorite = false,
   });
 
   int get totalTimeMinutes => prepTimeMinutes + cookTimeMinutes;
@@ -32,7 +30,6 @@ class Recipe {
     String? imageUrl,
     int? prepTimeMinutes,
     int? cookTimeMinutes,
-    bool? isFavorite,
   }) {
     return Recipe(
       id: id ?? this.id,
@@ -43,7 +40,6 @@ class Recipe {
       imageUrl: imageUrl ?? this.imageUrl,
       prepTimeMinutes: prepTimeMinutes ?? this.prepTimeMinutes,
       cookTimeMinutes: cookTimeMinutes ?? this.cookTimeMinutes,
-      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 }

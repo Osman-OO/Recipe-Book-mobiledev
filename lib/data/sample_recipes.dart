@@ -24,14 +24,16 @@ class SampleRecipes {
         'Remove from heat and quickly stir in egg mixture, adding pasta water as needed',
         'Serve immediately with extra cheese and pepper',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400',
+      imageUrl:
+          'https://images.unsplash.com/photo-1621996346565-e3dbc353d2e5?w=400',
       prepTimeMinutes: 10,
       cookTimeMinutes: 15,
     ),
     Recipe(
       id: '2',
       name: 'Chicken Tikka Masala',
-      description: 'Creamy and flavorful Indian curry with tender chicken pieces',
+      description:
+          'Creamy and flavorful Indian curry with tender chicken pieces',
       ingredients: [
         '500g chicken breast, cubed',
         '1 cup plain yogurt',
@@ -54,14 +56,16 @@ class SampleRecipes {
         'Simmer for 15 minutes until chicken is cooked through',
         'Garnish with cilantro and serve with rice',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400',
+      imageUrl:
+          'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400',
       prepTimeMinutes: 45,
       cookTimeMinutes: 30,
     ),
     Recipe(
       id: '3',
       name: 'Caesar Salad',
-      description: 'Fresh romaine lettuce with classic Caesar dressing and croutons',
+      description:
+          'Fresh romaine lettuce with classic Caesar dressing and croutons',
       ingredients: [
         '2 heads romaine lettuce',
         '1/2 cup mayonnaise',
@@ -80,7 +84,8 @@ class SampleRecipes {
         'Top with Parmesan cheese and croutons',
         'Serve immediately',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400',
+      imageUrl:
+          'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400',
       prepTimeMinutes: 15,
       cookTimeMinutes: 0,
     ),
@@ -110,7 +115,8 @@ class SampleRecipes {
         'Bake 9-11 minutes until golden brown',
         'Cool on baking sheet for 2 minutes before transferring',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400',
+      imageUrl:
+          'https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400',
       prepTimeMinutes: 15,
       cookTimeMinutes: 11,
     ),
@@ -139,28 +145,18 @@ class SampleRecipes {
         'Top with lettuce, tomatoes, cheese, sour cream, and onions',
         'Serve with hot sauce if desired',
       ],
-      imageUrl: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400',
+      imageUrl:
+          'https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400',
       prepTimeMinutes: 10,
       cookTimeMinutes: 15,
     ),
   ];
-
-  static List<Recipe> getFavoriteRecipes() {
-    return recipes.where((recipe) => recipe.isFavorite).toList();
-  }
 
   static Recipe? getRecipeById(String id) {
     try {
       return recipes.firstWhere((recipe) => recipe.id == id);
     } catch (e) {
       return null;
-    }
-  }
-
-  static void toggleFavorite(String id) {
-    final recipeIndex = recipes.indexWhere((recipe) => recipe.id == id);
-    if (recipeIndex != -1) {
-      recipes[recipeIndex].isFavorite = !recipes[recipeIndex].isFavorite;
     }
   }
 }
